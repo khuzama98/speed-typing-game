@@ -3,7 +3,7 @@ import { View, Text, ImageBackground, Image, KeyboardAvoidingView } from 'react-
 import { H1, Item, Input, Container, Content, Button } from 'native-base'
 import posed, { Transition } from 'react-native-pose';
 import Layout from '../common/Layout'
-import icon from '../../assets/logo.png'
+import icon from '../../assets/speed.png'
 import * as Font from 'expo-font';
 
 class Home extends Component {
@@ -37,7 +37,7 @@ class Home extends Component {
                     <View style={{ flex: 0.6, alignItems: "flex-end", justifyContent: "center" }} >
                         <Transition>
                             {isVisible && <Box key="a" style={{ alignSelf: "center" }} >
-                                <Image source={icon} style={{ alignSelf: "center" }} />
+                                <Image source={icon} style={{ alignSelf: "center", height: 60, width: 60 }} />
                                 {this.state.isloaded ? <H1 style={{ fontFamily: 'CaviarDreams', color: "white", alignSelf: "center", marginVertical: 20 }} >SPEED TYPING GAME</H1> : null}
                             </Box>}
                         </Transition>

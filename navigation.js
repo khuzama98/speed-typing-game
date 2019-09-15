@@ -26,6 +26,18 @@ const AuthNavigator = createStackNavigator({
 const GameNavigator = createStackNavigator({
     Game: {
         screen: Routes.Game
+    },
+    Level: {
+        screen: Routes.Level
+    },
+    Highscore: {
+        screen: Routes.Highscore
+    },
+    Startgame: {
+        screen: Routes.StartGame
+    },
+    Result: {
+        screen: Routes.Result
     }
 },
     {

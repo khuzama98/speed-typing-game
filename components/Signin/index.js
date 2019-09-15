@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { View, KeyboardAvoidingView, Text, Alert } from 'react-native';
-import { H1, Item, Input, Button, Spinner } from 'native-base'
+import { H1, Item, Input, Button, Spinner } from 'native-base';
+import { AsyncStorage } from 'react-native';
 import Layout from '../common/Layout'
 import * as Font from 'expo-font';
 import { UserSignin } from '../../config'
+import BackButton from '../common/Goback'
 
 class index extends Component {
     constructor(props) {
@@ -30,7 +32,6 @@ class index extends Component {
     }
 
     handleClick = async () => {
-        this.setState({ isRequest: true })
         const { username, password } = this.state;
 
         if (!username.trim() || !password.trim()) {
@@ -40,11 +41,12 @@ class index extends Component {
             );
         }
         else {
-
+            this.setState({ isRequest: true })
             try {
                 let result = await UserSignin(username, password);
                 console.log('result ==>', result)
                 if (!!result.success) {
+                    await AsyncStorage.setItem("user", JSON.stringify(username))
                     this.props.navigation.navigate("Game")
                 }
                 else {
@@ -67,10 +69,16 @@ class index extends Component {
 
     }
 
+    goToPreviousScreen = () => {
+        this.props.navigation.goBack();
+    }
+
+
     render() {
         return (
             <Layout>
                 <KeyboardAvoidingView behavior="padding" enabled style={{ flex: 1 }} >
+                    <BackButton onPress={this.goToPreviousScreen} />
                     <View style={{ flex: 0.5, justifyContent: "center", alignItems: "center" }} >
                         {!!this.state.isloaded ? <H1 style={{ fontFamily: 'CaviarDreams', color: "white" }} >SIGNIN</H1> : null}
                     </View>

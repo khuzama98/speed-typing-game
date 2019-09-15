@@ -1,5 +1,7 @@
 import Axios from "react-native-axios";
 
+const BASE_URL = "https://type-game.herokuapp.com";
+
 const registerUser = (username, password) => {
     return new Promise((resolve, reject) => {
         const credentials = {
@@ -7,7 +9,7 @@ const registerUser = (username, password) => {
             password
         }
         console.log(credentials);
-        fetch('https://type-game.herokuapp.com/users/signup', {
+        fetch(`${BASE_URL}/users/signup`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -27,7 +29,7 @@ const UserSignin = (username, password) => {
             password
         }
         console.log(credentials);
-        fetch('https://type-game.herokuapp.com/users/signin', {
+        fetch(`${BASE_URL}/users/signin`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -40,7 +42,38 @@ const UserSignin = (username, password) => {
     })
 }
 
+const getWords = (level) => {
+    return new Promise((resolve, reject) => {
+        fetch(`${BASE_URL}/words/get/${level}`)
+            .then((res) => res.json())
+            .then((res) => resolve(res))
+            .catch((e) => reject({ message: e.message }))
+    })
+}
+
+const setScore = (username, score, difficulty) => {
+    return new Promise((resolve, reject) => {
+        const data = {
+            username,
+            score,
+            difficulty
+        }
+        fetch(`${BASE_URL}/score/insert`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then((res) => res.json())
+            .then((res) => resolve(res))
+            .catch((e) => reject({ message: e.message }))
+    })
+}
+
 export {
     registerUser,
-    UserSignin
+    UserSignin,
+    getWords,
+    setScore
 }
